@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">GithubOrganizationsMVVM</string>
+
+    <string name="search_label">Rechercher:</string>
+    <string name="search">Rechercher</string>
+    <string name="searching">Recherche…</string>
+    <string name="empty_search_term_error">Le nom de l\'organisation ne peut pas être vide.</string>
+    <string name="error">Erreur</string>
+    <string name="no_repos_found">Aucune mise en repos trouvée</string>
+    <string name="ok">OK</string>
+
+    <!-- Errors -->
+    <string name="HTTP_403">HTTP 403</string>
+    <string name="api_rate_limit_exceeded">Limite de débit dépassée</string>
+    <string name="HTTP_404">HTTP 404</string>
+    <string name="organization_not_found">Organisation introuvable</string>
+    <string name="UNKNOWN_ERROR">Unknown Error</string>
+
+    <!-- Test Tags -->
+    <string name="REPOSBACKBUTTON_TEST_TAG">REPOSBACKBUTTON</string>
+    <string name="SEARCHTEXT_TEST_TAG">SEARCHTEXT</string>
+    <string name="AUTOCOMPLETE_TEST_TAG">AUTOCOMPLETE</string>
+
+    <!--    Accessibility-->
+    <string name="search_github_organizations_hint">Rechercher une organisation Github</string>
+    <string name="search_text_accessibility_hint">Entrez un nom d\'organisation Github</string>
+    <string name="search_button_accessibility_hint">Cliquez pour rechercher l\'organisation Github</string>
+    <string name="repo_button_accessibility_hint">Cliquez pour afficher les détails du dépôt</string>
+    <string name="back_button_accessibility_hint">Cliquez pour revenir à l\'écran précédent</string>
+    <string name="repo_number_of_stars_hint">Nombre d\'étoiles</string>
+
+</resources>

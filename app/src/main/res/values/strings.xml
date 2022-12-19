@@ -1,0 +1,32 @@
+<resources>
+    <string name="app_name">GithubOrganizationsMVVM</string>
+
+    <string name="search_label">Search:</string>
+    <string name="search">Search</string>
+    <string name="searching">Searching…</string>
+    <string name="error">Error</string>
+    <string name="empty_search_term_error">Organization name cannot be blank.</string>
+    <string name="no_repos_found">No Repos Found</string>
+    <string name="ok">OK</string>
+
+    <!-- Errors -->
+    <string name="HTTP_403">HTTP 403</string>
+    <string name="api_rate_limit_exceeded">API Rate Limit Exceeded</string>
+    <string name="HTTP_404">HTTP 404</string>
+    <string name="organization_not_found">Organization Not Found</string>
+    <string name="UNKNOWN_ERROR">Unknown Error</string>
+
+    <!-- Test Tags -->
+    <string name="REPOSBACKBUTTON_TEST_TAG">REPOSBACKBUTTON</string>
+    <string name="SEARCHTEXT_TEST_TAG">SEARCHTEXT</string>
+    <string name="AUTOCOMPLETE_TEST_TAG">AUTOCOMPLETE</string>
+
+    <!-- Accessibility -->
+    <string name="search_github_organizations_hint">Search Github organization</string>
+    <string name="search_text_accessibility_hint">Enter a Github organization name</string>
+    <string name="search_button_accessibility_hint">Click to search for the Github organization</string>
+    <string name="repo_button_accessibility_hint">Click to view repo details</string>
+    <string name="back_button_accessibility_hint">Click to return to the previous screen</string>
+    <string name="repo_number_of_stars_hint">Number of stars</string>
+
+</resources>

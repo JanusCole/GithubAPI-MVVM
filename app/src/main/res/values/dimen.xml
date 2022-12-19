@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="standard_font_size">14sp</dimen>
+    <dimen name="standard_padding">5dp</dimen>
+    <dimen name="repo_card_padding">10dp</dimen>
+    <dimen name="repo_card_corner_radius">5dp</dimen>
+    <dimen name="repo_card_border_stroke">2dp</dimen>
+    <dimen name="organization_avatar_size">50dp</dimen>
+    <dimen name="loading_indicator_padding">30dp</dimen>
+</resources>

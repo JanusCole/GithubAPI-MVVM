@@ -1,0 +1,209 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
+
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+    id 'kotlin-parcelize'
+    id 'dagger.hilt.android.plugin'
+    id 'com.google.protobuf' version '0.9.1'
+    id 'kotlin-kapt'
+    id "org.jlleitschuh.gradle.ktlint" version "11.0.0"
+    id 'jacoco'
+}
+
+android {
+    namespace 'com.januscole.githuborganizationsmvvm'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.januscole.githuborganizationsmvvm"
+        minSdk 26
+        targetSdk 33
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "com.januscole.githuborganizationsmvvm.HiltTestRunner"
+        vectorDrawables {
+            useSupportLibrary true
+        }
+    }
+
+    buildTypes {
+        all {
+            buildConfigField("String", 'BASE_GITHUB_API_URL', "\"https://api.github.com/\"")
+        }
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            testCoverageEnabled = true
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+    kotlinOptions {
+        jvmTarget = '11'
+    }
+    buildFeatures {
+        compose true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion "$compose_compiler_version"
+    }
+    packagingOptions {
+        resources {
+            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+        }
+    }
+}
+
+tasks.getByPath("preBuild").dependsOn("ktlintFormat")
+
+ktlint {
+    android = true
+    ignoreFailures = false
+    disabledRules = ["no-wildcard-imports", "max-line-length"]
+    reporters {
+        reporter "plain"
+        reporter "checkstyle"
+        reporter "sarif"
+    }
+}
+
+tasks.withType(KotlinCompile).configureEach {
+    kotlinOptions {
+        freeCompilerArgs += "-opt-in=kotlin.RequiresOptIn"
+    }
+}
+
+dependencies {
+    implementation "androidx.core:core-ktx:$core_ktx_version"
+    implementation "androidx.lifecycle:lifecycle-runtime-ktx:$runtime_ktx_version"
+
+    // Jetpack Compose
+    implementation "androidx.activity:activity-compose:$activity_compose_version"
+    implementation "androidx.compose.ui:ui:$compose_ui_version"
+    implementation "androidx.compose.ui:ui-tooling-preview:$compose_ui_version"
+    implementation "androidx.compose.material:material:$compose_material_version"
+    implementation "androidx.navigation:navigation-compose:$navigation_compose_version"
+    implementation "androidx.browser:browser:$browser_version"
+
+    // Integration with ViewModels
+    implementation "androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_viewmodel_compose_version"
+
+    // Gson
+    implementation "com.google.code.gson:gson:$gson_version"
+    implementation "com.squareup.retrofit2:converter-gson:$gson_converter_version"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    
+    //Dagger - Hilt
+    implementation "com.google.dagger:hilt-android:$hilt_android_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_android_version"
+    kapt "androidx.hilt:hilt-compiler:$hilt_navigation_version"
+    implementation "androidx.hilt:hilt-navigation-compose:$hilt_navigation_version"
+
+    // Datastore
+    implementation  "androidx.datastore:datastore-core:$datastore_version"
+    implementation "androidx.datastore:datastore-preferences:$datastore_version"
+
+    // Protobuf
+    implementation  "com.google.protobuf:protobuf-javalite:$protobuf_version"
+    implementation "com.google.protobuf:protobuf-kotlin-lite:$protobuf_version"
+
+    // Coil image processing
+    implementation "io.coil-kt:coil-compose:$coil_version"
+
+    // LeakCanary
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:$leak_canary_version"
+
+    // Testing
+    testImplementation "junit:junit:$junit_version"
+
+    // Mockito
+    testImplementation "org.mockito:mockito-core:$mockitoVersion"
+    testImplementation "org.mockito.kotlin:mockito-kotlin:$mockitoKotlinVersion"
+
+    testImplementation "org.mockito:mockito-inline:$mockitoInlineVersion"
+
+    androidTestImplementation "androidx.test.ext:junit:$android_junit_version"
+    androidTestImplementation "androidx.test.espresso:espresso-core:$espresso_version"
+    androidTestImplementation "androidx.compose.ui:ui-test-junit4:$compose_ui_version"
+    androidTestImplementation "androidx.test.espresso:espresso-accessibility:$espresso_version"
+
+    androidTestImplementation "org.mockito:mockito-android:$mockitoEspressoVersion"
+
+    debugImplementation "androidx.compose.ui:ui-tooling:$compose_ui_version"
+    debugImplementation "androidx.compose.ui:ui-test-manifest:$compose_ui_version"
+
+    // For tests.
+    testImplementation "com.google.dagger:hilt-android-testing:$hilt_android_version"
+    // ...with Kotlin.
+    kaptTest "com.google.dagger:hilt-android-compiler:$hilt_android_version"
+    // ...with Java.
+    testAnnotationProcessor "com.google.dagger:hilt-android-compiler:$hilt_android_version"
+
+
+    // For instrumented tests.
+    androidTestImplementation "com.google.dagger:hilt-android-testing:$hilt_android_version"
+    // ...with Kotlin.
+    kaptAndroidTest "com.google.dagger:hilt-android-compiler:$hilt_android_version"
+    // ...with Java.
+    androidTestAnnotationProcessor "com.google.dagger:hilt-android-compiler:$hilt_android_version"
+
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:$coroutine_tests_version"
+
+    testImplementation "app.cash.turbine:turbine:$turbine_version"
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes true
+}
+
+// Copied directly from the Google Codelab
+protobuf {
+    protoc {
+        // Enable support for Apple M1 Silicone
+        // https://github.com/grpc/grpc-java/issues/7690
+        if ("aarch64" == System.getProperty("os.arch")) {
+            // mac m1
+            artifact = "com.google.protobuf:protoc:3.14.0:osx-x86_64"
+        } else {
+            // other
+            artifact = "com.google.protobuf:protoc:3.14.0"
+        }
+    }
+
+    // Generates the java Protobuf-lite code for the Protobufs in this project. See
+    // https://github.com/google/protobuf-gradle-plugin#customizing-protobuf-compilation
+    // for more information.
+    generateProtoTasks {
+        all().each { task ->
+            task.builtins {
+                java {
+                    option 'lite'
+                }
+            }
+        }
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.7"
+}
+
+configurations.all{
+    resolutionStrategy {
+        eachDependency { details ->
+            if ('org.jacoco' == details.requested.group) {
+                details.useVersion "0.8.7"
+            }
+        }
+    }
+}
